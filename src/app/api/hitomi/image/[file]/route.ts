@@ -7,6 +7,18 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { file: string } }
 ) {
+  if (request.method === "OPTIONS") {
+    return new Response(null, {
+      status: 200,
+      statusText: "OK",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+    });
+  }
+
   const [hash, ext] = params.file.split(".");
 
   if (!hash || !ext)
