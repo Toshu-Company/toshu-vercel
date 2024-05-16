@@ -7,7 +7,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { file: string } }
 ) {
-  const [hash, ext] = params.file.split(".");
+  let [hash, ext] = params.file.split(".");
+
+  ext = ext ?? "webp";
 
   if (!hash || !ext)
     return NextResponse.json({ error: "Invalid file name" }, { status: 400 });
