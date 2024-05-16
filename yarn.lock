@@ -187,6 +187,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@nyariv/sandboxjs@^0.8.23":
+  version "0.8.23"
+  resolved "https://registry.yarnpkg.com/@nyariv/sandboxjs/-/sandboxjs-0.8.23.tgz#6903ff28343988f12f142f79c577fbd226288920"
+  integrity sha512-OaD3i0czFTZzQFQdwgFVEqNyZVK19N6Jzmx/LjmDc+kiV751FQ2h3xscYkAeY4jfau2vZTZau+xR8fpkKrv/Ng==
+
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"

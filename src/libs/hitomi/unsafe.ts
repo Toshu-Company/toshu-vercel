@@ -1,9 +1,23 @@
+import Sandbox from "@nyariv/sandboxjs";
+
+const sandbox = new Sandbox();
+
+interface Context {
+  gg: {
+    b: string;
+    s: (x: string) => string;
+    m: (x: number) => number;
+  };
+}
+
 export async function getGG() {
-  let gg = {};
+  let context: Context = { gg: {} } as any;
 
-  const res = await fetch("https://ltn.hitomi.la/gg.js")
-    .then((x) => x.text())
-    .then((x) => new Function("let gg;" + x + "return gg;")());
+  const res = await fetch("https://ltn.hitomi.la/gg.js").then((x) => x.text());
 
-  return res;
+  sandbox.compile(res)(context).run();
+
+  console.log(context);
+
+  return context.gg;
 }
