@@ -10,12 +10,10 @@ interface Context {
   };
 }
 
-export async function getGG() {
+export async function parseGG(code: string) {
   let context: Context = { gg: {} } as any;
 
-  const res = await fetch("https://ltn.hitomi.la/gg.js").then((x) => x.text());
-
-  sandbox.compile(res)(context).run();
+  sandbox.compile(code)(context).run();
 
   console.log(context);
 

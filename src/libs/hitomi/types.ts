@@ -55,7 +55,7 @@ export const IndexOfField = {
   nozomiurl: "nozomiurlindex",
 };
 export interface BNode {
-  keys: Buffer[];
+  keys: ArrayBuffer[];
   datas: BData[];
   subnodes: bigint[];
 }
