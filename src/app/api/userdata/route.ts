@@ -1,5 +1,5 @@
 import { validate } from "@/libs/auth/tools";
-import { getUserdata, setUserdata } from "@/libs/db/userdata";
+import { getUserdata, setUserdata, UserData } from "@/libs/db/userdata";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -29,10 +29,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error }, { status });
   }
 
-  const { favorites }: { favorites: number[] } = await request.json();
-  const userdata = (await getUserdata(userid))?.data ?? { favorites: [] };
-
-  userdata.favorites = favorites;
+  const userdata: UserData = await request.json();
 
   await setUserdata(userid, userdata);
 
