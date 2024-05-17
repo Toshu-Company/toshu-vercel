@@ -15,7 +15,5 @@ export async function parseGG(code: string) {
 
   sandbox.compile(code)(context).run();
 
-  console.log(context);
-
   return context.gg;
 }

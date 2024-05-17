@@ -239,7 +239,9 @@ export default class HitomiAPI {
   private static async getGG() {
     let code = await this.cache.get<string>("gg");
     if (!code) {
-      code = await fetch("https://ltn.hitomi.la/gg.js").then((x) => x.text());
+      code = await fetch("https://ltn.hitomi.la/gg.js", {
+        cache: "no-store",
+      }).then((x) => x.text());
       await this.cache.set("gg", code, { ex: 60 });
     }
 
