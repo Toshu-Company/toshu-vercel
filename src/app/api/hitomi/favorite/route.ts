@@ -25,7 +25,6 @@ export async function POST(request: NextRequest) {
   const { userid, error, status } = await validate(request);
 
   if (!userid) {
-    console.log(error, status);
     return NextResponse.json({ error }, { status });
   }
 
