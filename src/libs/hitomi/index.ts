@@ -72,6 +72,7 @@ export default class HitomiAPI {
             )
           )
       ) + "a";
+    console.log(`https://${subdomain}.hitomi.la/${path}`);
     return await fetch(`https://${subdomain}.hitomi.la/${path}`, {
       headers: {
         "User-Agent":
@@ -103,6 +104,7 @@ export default class HitomiAPI {
             )
           )
       ) + "tn";
+    console.log(`https://${subdomain}.hitomi.la/${path}`);
     return await fetch(`https://${subdomain}.hitomi.la/${path}`, {
       headers: {
         "User-Agent":
