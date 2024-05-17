@@ -1,0 +1,15 @@
+diff --git a/dist/bcrypt.js b/dist/bcrypt.js
+index 1b0a648e0a71e9cc2bf1aec5c36867bdf261f047..e8b3a639106c35fc075b93f53b672cb7a14d291e 100644
+--- a/dist/bcrypt.js
++++ b/dist/bcrypt.js
+@@ -65,10 +65,6 @@
+      * @inner
+      */
+     function random(len) {
+-        /* node */ if (typeof module !== 'undefined' && module && module['exports'])
+-            try {
+-                return require("crypto")['randomBytes'](len);
+-            } catch (e) {}
+         /* WCA */ try {
+             var a; (self['crypto']||self['msCrypto'])['getRandomValues'](a = new Uint32Array(len));
+             return Array.prototype.slice.call(a);
