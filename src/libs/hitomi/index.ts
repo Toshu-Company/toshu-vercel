@@ -242,7 +242,7 @@ export default class HitomiAPI {
       code = await fetch("https://ltn.hitomi.la/gg.js", {
         cache: "no-store",
       }).then((x) => x.text());
-      await this.cache.set("gg", code, { ex: 60 });
+      await this.cache.set("gg", code, { ex: 600 });
     }
 
     return parseGG(code!);
