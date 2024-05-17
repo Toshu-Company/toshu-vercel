@@ -14,21 +14,21 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
   }
 
-  const { username, password } = body;
+  const { id, password } = body;
 
-  if (!username || !password) {
+  if (!id || !password) {
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
   }
 
-  if ((await validateUser(username, password)) === null) {
+  if ((await validateUser(id, password)) === null) {
     return NextResponse.json(
       { error: "Invalid username or password" },
       { status: 401 }
     );
   }
 
-  const refreshToken = await generateRefreshToken(username);
-  const accessToken = await generateAccessToken(username);
+  const refreshToken = await generateRefreshToken(id);
+  const accessToken = await generateAccessToken(id);
 
   return NextResponse.json(
     {

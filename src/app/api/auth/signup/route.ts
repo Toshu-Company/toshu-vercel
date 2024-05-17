@@ -10,14 +10,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
   }
 
-  const { username, password } = body;
+  const { id, password } = body;
 
-  if (!username || !password) {
+  if (!id || !password) {
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
   }
 
-  const { id, accessToken, refreshToken } = await createUser({
-    id: username,
+  const { accessToken, refreshToken } = await createUser({
+    id,
     password,
   });
 
