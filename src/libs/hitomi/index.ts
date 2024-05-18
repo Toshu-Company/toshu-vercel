@@ -320,7 +320,7 @@ export default class HitomiAPI {
         datas.push({ offset, length });
       }
 
-      const number_of_subnodes = B + 1;
+      const number_of_subnodes = B;
       let subnodes = [];
       for (let i = 0; i <= number_of_subnodes; i++) {
         let subnode_address = view.getBigUint64(pos, false /* big-endian */);
