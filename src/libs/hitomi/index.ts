@@ -115,6 +115,15 @@ export default class HitomiAPI {
     }).then((x) => x.arrayBuffer());
   }
 
+  public static async getSuggestion(query: string) {
+    const [field, key] = await this.getFieldAndKeyFromQuery(query);
+    const node = await this.getNode(field as any);
+    const data = await this.BSearch(field as any, key, node);
+    if (!data) return [];
+    const result = await this.getSuggestionWithData(field as any, data);
+    return result;
+  }
+
   public static async getSearch(
     query: string,
     language: HitomiLanguage = "all"
