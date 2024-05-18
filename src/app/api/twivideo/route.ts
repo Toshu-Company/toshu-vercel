@@ -51,5 +51,11 @@ export async function GET(request: NextRequest) {
       return videos;
     });
 
-  return NextResponse.json(res);
+  return NextResponse.json(res, {
+    headers: {
+      "Cache-Control": "public, max-age=60",
+      "CDN-Cache-Control": "public, s-maxage=600",
+      "Vercel-CDN-Cache-Control": "public, s-maxage=600",
+    },
+  });
 }
