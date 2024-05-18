@@ -11,9 +11,9 @@ export async function GET(
 
   return NextResponse.json(await HitomiAPI.getGallery(id), {
     headers: {
-      "Cache-Control": "public, max-age=60, stale-while-revalidate=300",
-      "CDN-Cache-Control": "public, s-maxage=3600",
-      "Vercel-CDN-Cache-Control": "public, s-maxage=86400",
+      "Cache-Control": "public, max-age=86400, immutable",
+      "CDN-Cache-Control": "public, s-maxage=31536000",
+      "Vercel-CDN-Cache-Control": "public, s-maxage=31536000",
     },
   });
 }

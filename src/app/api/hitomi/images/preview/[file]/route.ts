@@ -33,6 +33,8 @@ export async function GET(
     headers: {
       "Content-Type": `image/${ext}`,
       "Cache-Control": "public, max-age=604800, immutable",
+      "CDN-Cache-Control": "public, s-maxage=31536000",
+      "Vercel-CDN-Cache-Control": "public, s-maxage=31536000",
     },
   });
 }
