@@ -7,7 +7,11 @@ export default class HitomiAPI {
   private static cache = kv;
 
   public static async getIndex(language: HitomiLanguage = "all") {
-    const res = await fetch(`https://ltn.hitomi.la/index-${language}.nozomi`)
+    const res = await fetch(`https://ltn.hitomi.la/index-${language}.nozomi`, {
+      next: {
+        revalidate: 600,
+      },
+    })
       .then((x) => x.arrayBuffer())
       .then(this.parseIntArray);
 
@@ -22,6 +26,9 @@ export default class HitomiAPI {
     const res = await fetch(`https://ltn.hitomi.la/index-${language}.nozomi`, {
       headers: {
         Range: `bytes=${start * 4}-${end * 4 - 1}`,
+      },
+      next: {
+        revalidate: 600,
       },
     })
       .then((x) => x.arrayBuffer())
@@ -43,11 +50,7 @@ export default class HitomiAPI {
   }
 
   public static async getGallery(id: number) {
-    const res = await fetch(`https://ltn.hitomi.la/galleries/${id}.js`, {
-      next: {
-        revalidate: 60 * 60 * 24,
-      },
-    })
+    const res = await fetch(`https://ltn.hitomi.la/galleries/${id}.js`)
       .then((x) => x.text())
       .then((x) => x.substring("var galleryinfo = ".length))
       .then(JSON.parse);
@@ -72,7 +75,6 @@ export default class HitomiAPI {
             )
           )
       ) + "a";
-    console.log(`https://${subdomain}.hitomi.la/${path}`);
     return await fetch(`https://${subdomain}.hitomi.la/${path}`, {
       headers: {
         "User-Agent":
@@ -104,7 +106,6 @@ export default class HitomiAPI {
             )
           )
       ) + "tn";
-    console.log(`https://${subdomain}.hitomi.la/${path}`);
     return await fetch(`https://${subdomain}.hitomi.la/${path}`, {
       headers: {
         "User-Agent":
@@ -172,7 +173,11 @@ export default class HitomiAPI {
     const url = `https://${domain}/${compressed_nozomi_prefix}/${
       area ? `${area}/` : ""
     }${tag}-${lang}.nozomi`;
-    const res = fetch(url)
+    const res = fetch(url, {
+      next: {
+        revalidate: 600,
+      },
+    })
       .then((x) => x.arrayBuffer())
       .then(this.parseIntArray);
 
@@ -322,6 +327,9 @@ export default class HitomiAPI {
       headers: {
         Range: `bytes=${address}-${address + max_node_size - 1}`,
       },
+      next: {
+        revalidate: 600,
+      },
     })
       .then((x) => x.arrayBuffer())
       .then(decodeNode);
@@ -395,6 +403,9 @@ export default class HitomiAPI {
       headers: {
         Range: `bytes=${offset}-${offset + BigInt(length - 1)}`,
       },
+      next: {
+        revalidate: 600,
+      },
     })
       .then((x) => x.arrayBuffer())
       .then(decodeSuggestion);
@@ -444,6 +455,9 @@ export default class HitomiAPI {
     const res = await fetch(url, {
       headers: {
         Range: `bytes=${offset}-${offset + BigInt(length - 1)}`,
+      },
+      next: {
+        revalidate: 600,
       },
     })
       .then((x) => x.arrayBuffer())
