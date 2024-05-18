@@ -33,9 +33,7 @@ export async function GET(request: NextRequest) {
   const res = await fetch("https://twivideo.net/templates/view_lists.php", {
     method: "POST",
     body: form,
-    next: {
-      revalidate: 60 * 5, // 5 minutes
-    },
+    cache: "no-store",
   })
     .then((res) => res.text())
     .then((res) => cheerio.load(res))
