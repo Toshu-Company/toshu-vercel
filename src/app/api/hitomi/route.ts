@@ -4,6 +4,18 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
+function JsonResponse<JsonBody = unknown>(body: JsonBody) {
+  return NextResponse.json(body, {
+    status: 200,
+    statusText: "OK",
+    headers: {
+      "Cache-Control": "public, max-age=300",
+      "CDN-Cache-Control": "public, s-maxage=300",
+      "Vercel-CDN-Cache-Control": "public, s-maxage=300",
+    },
+  });
+}
+
 export async function GET(request: NextRequest) {
   const rawParams = request.url.split("?")[1];
   const params = new URLSearchParams(rawParams);
@@ -20,17 +32,14 @@ export async function GET(request: NextRequest) {
 
   if (query) {
     if (!page)
-      return await HitomiAPI.getSearch(query, language).then(NextResponse.json);
+      return await HitomiAPI.getSearch(query, language).then(JsonResponse);
 
     return await HitomiAPI.getSearch(query, language)
       .then((res) => res.slice((page - 1) * 25, page * 25))
-      .then(NextResponse.json);
+      .then(JsonResponse);
   } else {
-    if (!page)
-      return await HitomiAPI.getIndex(language).then(NextResponse.json);
+    if (!page) return await HitomiAPI.getIndex(language).then(JsonResponse);
 
-    return await HitomiAPI.getIndexWithPage(language, page).then(
-      NextResponse.json
-    );
+    return await HitomiAPI.getIndexWithPage(language, page).then(JsonResponse);
   }
 }
