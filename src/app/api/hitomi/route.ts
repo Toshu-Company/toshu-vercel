@@ -31,6 +31,8 @@ export async function GET(request: NextRequest) {
   if (language !== "all" && !isHitomiLanguage(language))
     return NextResponse.json({ error: "Invalid language" }, { status: 400 });
 
+  HitomiAPI.date = new Date();
+
   if (query) {
     if (!page)
       return await HitomiAPI.getSearch(query, language).then(JsonResponse);

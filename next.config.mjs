@@ -16,10 +16,6 @@ const nextConfig = {
                     {
                         key: 'Access-Control-Allow-Headers',
                         value: '*',
-                    },
-                    {
-                        key: 'Generated-Date',
-                        value: new Date().toUTCString(),
                     }
                 ],
             },
