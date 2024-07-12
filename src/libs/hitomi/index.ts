@@ -5,6 +5,7 @@ import { domain, compressed_nozomi_prefix, B, max_node_size } from "./const";
 
 export default class HitomiAPI {
   private static cache = kv;
+  public static date: Date;
 
   public static async getIndex(language: HitomiLanguage = "all") {
     const res = await fetch(`https://ltn.hitomi.la/index-${language}.nozomi`, {
@@ -12,6 +13,9 @@ export default class HitomiAPI {
         revalidate: 600,
       },
     })
+      .then(
+        (x) => ((this.date = new Date(x.headers.get("Date") ?? this.date)), x)
+      )
       .then((x) => x.arrayBuffer())
       .then(this.parseIntArray);
 
@@ -31,6 +35,9 @@ export default class HitomiAPI {
         revalidate: 600,
       },
     })
+      .then(
+        (x) => ((this.date = new Date(x.headers.get("Date") ?? this.date)), x)
+      )
       .then((x) => x.arrayBuffer())
       .then(this.parseIntArray);
 

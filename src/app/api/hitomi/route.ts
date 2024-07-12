@@ -12,6 +12,7 @@ function JsonResponse<JsonBody = unknown>(body: JsonBody) {
       "Cache-Control": "public, max-age=300",
       "CDN-Cache-Control": "public, s-maxage=300",
       "Vercel-CDN-Cache-Control": "public, s-maxage=300",
+      "Generated-Date": HitomiAPI.date.toUTCString(),
     },
   });
 }
