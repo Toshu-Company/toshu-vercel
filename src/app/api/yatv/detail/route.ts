@@ -24,12 +24,18 @@ export async function POST(request: NextRequest) {
     .then(([$, text]) => {
       const url = $("iframe#movie").attr("src");
       const id = /cvid='([a-z0-9]+)'/.exec(text)?.[1];
+      const tags = $("body > div > a:not([class])")
+        .map((i, el) => $(el).text())
+        .toArray();
       const content = parsePost($(`article.post#${id}`));
       if (!url) return undefined;
+
+      console.log(tags);
 
       return {
         url: url,
         id: content?.id,
+        tags: tags,
         title: content?.title,
         upload_date: content?.upload_date,
         playtime: content?.playtime,
@@ -70,6 +76,7 @@ export async function POST(request: NextRequest) {
     {
       video: res,
       id: url_data.id,
+      tags: url_data.tags,
       title: url_data.title,
       playtime: url_data.playtime,
       thumbnail: url_data.thumbnail,
