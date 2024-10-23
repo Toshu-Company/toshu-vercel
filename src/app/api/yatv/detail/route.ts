@@ -57,22 +57,23 @@ export async function POST(request: NextRequest) {
     .then((res) => res.text())
     .then((res) => cheerio.load(res))
     .then(($) => $("script:not([src])").text())
-    .then((script) =>
-      sandbox
-        .compile(`return ${script}`)({
-          play: (a: any, b: any, c: any) => c,
-        })
-        .run()
+    .then(
+      (script) =>
+        sandbox
+          .compile(`return ${script}`)({
+            play: (a: any, b: any, c: any) => c,
+          })
+          .run() as string
     );
 
   return NextResponse.json(
     {
       video: res,
       id: url_data.id,
-      thumbnail: url_data.thumbnail,
       title: url_data.title,
-      upload_date: url_data.upload_date,
       playtime: url_data.playtime,
+      thumbnail: url_data.thumbnail,
+      upload_date: url_data.upload_date,
       message: `Referer header must be set to "${CDN}".`,
     },
     {
