@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
 import { NextRequest, NextResponse } from "next/server";
-import { CDN, HOST } from "../utils";
+import { CDN, HOST, parsePost } from "../utils";
 import Sandbox from "@nyariv/sandboxjs";
 
 export const runtime = "edge";
@@ -20,16 +20,22 @@ export async function POST(request: NextRequest) {
     cache: "no-store",
   })
     .then((res) => res.text())
-    .then((res) => cheerio.load(res))
-    .then(($) => $("iframe#movie").attr("src"))
-    .then((url) =>
-      url
-        ? {
-            url: url,
-            thumbnail: new URL(url).searchParams.get("img"),
-          }
-        : undefined
-    )
+    .then((res) => [cheerio.load(res), res] as const)
+    .then(([$, text]) => {
+      const url = $("iframe#movie").attr("src");
+      const id = /cvid='([a-z0-9]+)'/.exec(text)?.[1];
+      const content = parsePost($(`article.post#${id}`));
+      if (!url) return undefined;
+
+      return {
+        url: url,
+        id: content?.id,
+        title: content?.title,
+        upload_date: content?.upload_date,
+        playtime: content?.playtime,
+        thumbnail: new URL(url).searchParams.get("img"),
+      };
+    })
     .catch(console.error);
 
   if (!url_data) {
@@ -62,7 +68,11 @@ export async function POST(request: NextRequest) {
   return NextResponse.json(
     {
       video: res,
+      id: url_data.id,
       thumbnail: url_data.thumbnail,
+      title: url_data.title,
+      upload_date: url_data.upload_date,
+      playtime: url_data.playtime,
       message: `Referer header must be set to "${CDN}".`,
     },
     {
