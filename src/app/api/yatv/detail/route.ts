@@ -14,8 +14,8 @@ export async function POST(request: NextRequest) {
     headers: {
       "User-Agent":
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
+      Referer: HOST,
     },
-    referrer: HOST,
     method: "GET",
     cache: "no-store",
   })
@@ -43,8 +43,8 @@ export async function POST(request: NextRequest) {
     headers: {
       "User-Agent":
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
+      Referer: HOST,
     },
-    referrer: HOST,
     method: "GET",
     cache: "no-store",
   })
