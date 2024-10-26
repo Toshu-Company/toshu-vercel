@@ -7,9 +7,28 @@ export const runtime = "edge";
 
 const sandbox = new Sandbox();
 
+export async function GET(request: NextRequest) {
+  const rawParams = request.url.split("?")[1];
+  const params = new URLSearchParams(rawParams);
+  if (!params.has("url")) {
+    return new Response("Missing URL parameter", {
+      status: 400,
+      statusText: "Bad Request",
+    });
+  }
+
+  const url = atob(params.get("url")!);
+
+  return await Parse(url);
+}
+
 export async function POST(request: NextRequest) {
   const { url }: { url: string } = await request.json();
 
+  return await Parse(url);
+}
+
+async function Parse(url: string) {
   const url_data = await fetch(`${HOST}${url}`, {
     headers: {
       "User-Agent":
@@ -29,8 +48,6 @@ export async function POST(request: NextRequest) {
         .toArray();
       const content = parsePost($(`article.post#${id}`));
       if (!url) return undefined;
-
-      console.log(tags);
 
       return {
         url: url,
