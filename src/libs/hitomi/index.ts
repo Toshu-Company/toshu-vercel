@@ -67,21 +67,21 @@ export default class HitomiAPI {
 
   public static async getImage(hash: string, type: "avif" | "webp") {
     const gg = await this.getGG();
-    const path = `${type}/${gg.b}${gg.s(hash)}/${hash}.${type}`;
+    const path = `${gg.b}${gg.s(hash)}/${hash}.${type}`;
     const subdomain =
-      String.fromCharCode(
-        97 +
-          gg.m(
-            parseInt(
-              /(..)(.)$/
-                .exec(hash)!
-                .splice(1)
-                .reverse()
-                .reduce((a, b) => a + b, ""),
-              16
-            )
+      (type == "avif" ? "a" : "w") +
+      String(
+        gg.m(
+          parseInt(
+            /(..)(.)$/
+              .exec(hash)!
+              .splice(1)
+              .reverse()
+              .reduce((a, b) => a + b, ""),
+            16
           )
-      ) + "a";
+        ) + 1
+      );
     return await fetch(`https://${subdomain}.${domain}/${path}`, {
       headers: {
         "User-Agent":
