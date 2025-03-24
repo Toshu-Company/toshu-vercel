@@ -8,7 +8,7 @@ export default class HitomiAPI {
   public static date: Date;
 
   public static async getIndex(language: HitomiLanguage = "all") {
-    const res = await fetch(`https://ltn.hitomi.la/index-${language}.nozomi`, {
+    const res = await fetch(`https://ltn.${domain}/index-${language}.nozomi`, {
       next: {
         revalidate: 600,
       },
@@ -27,7 +27,7 @@ export default class HitomiAPI {
     start = 0,
     end = 25
   ) {
-    const res = await fetch(`https://ltn.hitomi.la/index-${language}.nozomi`, {
+    const res = await fetch(`https://ltn.${domain}/index-${language}.nozomi`, {
       headers: {
         Range: `bytes=${start * 4}-${end * 4 - 1}`,
       },
@@ -57,7 +57,7 @@ export default class HitomiAPI {
   }
 
   public static async getGallery(id: number) {
-    const res = await fetch(`https://ltn.hitomi.la/galleries/${id}.js`)
+    const res = await fetch(`https://ltn.${domain}/galleries/${id}.js`)
       .then((x) => x.text())
       .then((x) => x.substring("var galleryinfo = ".length))
       .then(JSON.parse);
@@ -82,7 +82,7 @@ export default class HitomiAPI {
             )
           )
       ) + "a";
-    return await fetch(`https://${subdomain}.hitomi.la/${path}`, {
+    return await fetch(`https://${subdomain}.${domain}/${path}`, {
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
@@ -113,7 +113,7 @@ export default class HitomiAPI {
             )
           )
       ) + "tn";
-    return await fetch(`https://${subdomain}.hitomi.la/${path}`, {
+    return await fetch(`https://${subdomain}.${domain}/${path}`, {
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
@@ -258,7 +258,7 @@ export default class HitomiAPI {
   }
 
   private static async getGG() {
-    let code = await fetch("https://ltn.hitomi.la/gg.js", {
+    let code = await fetch(`https://ltn.${domain}/gg.js`, {
       next: {
         revalidate: 60 * 60, // 1 hour
       },

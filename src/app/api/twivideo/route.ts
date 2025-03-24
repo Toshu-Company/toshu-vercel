@@ -20,13 +20,15 @@ export async function GET(request: NextRequest) {
   const offset = Number(params.get("offset")) || 0;
   const limit = Number(params.get("limit")) || 45;
   const type: VideoType = Number(params.get("type")) || VideoType.LIVE_DL;
+  const order: "24" | "72" | "168" | "post_date" =
+    (params.get("order") as any) || "post_date";
 
   const form = new FormData();
   form.append("offset", offset.toString());
   form.append("limit", limit.toString());
   form.append("tag", "null");
   form.append("type", type.toString());
-  form.append("order", "post_date");
+  form.append("order", order);
   form.append("le", "1000");
   form.append("ty", "p4");
 
