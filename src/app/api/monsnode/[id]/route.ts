@@ -1,12 +1,11 @@
 import * as cheerio from "cheerio";
 import { NextRequest, NextResponse } from "next/server";
 import { parseItems } from "../parser";
-import { NextApiRequest } from "next";
 
 export const runtime = "edge";
 
 export async function GET(
-  request: NextApiRequest,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   const { id } = params;
@@ -43,10 +42,4 @@ export async function GET(
       "Vercel-CDN-Cache-Control": "public, s-maxage=600",
     },
   });
-}
-
-export async function POST(request: NextRequest) {
-  const { url }: { url: string } = await request.json();
-
-  return await Parse(url);
 }
