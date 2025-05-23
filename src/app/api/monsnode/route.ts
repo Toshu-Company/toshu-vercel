@@ -3,14 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
-enum VideoType {
-  LIVE_DL = 0,
-  DL_LIST = 1,
-}
-
 interface Video {
   id?: string;
   url?: string;
+  user?: string;
   content?: string;
   thumbnail?: string;
 }
@@ -37,6 +33,7 @@ export async function GET(request: NextRequest) {
           const video: Video = {
             id: $el.attr("id"),
             url: $el.find("a").attr("href"),
+            user: $el.find("div.user a").attr("title"),
             content: $el.find("img").attr("alt"),
             thumbnail: $el.find("img").attr("src"),
           };
