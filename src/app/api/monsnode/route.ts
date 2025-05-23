@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     const ranking = Boolean(params.get("rank")) || false;
 
     const url = new URL(`${HOST}${ranking ? "ranking" : ""}`);
-    if (page > 0) url.searchParams.set("page", page.toString());
+    url.searchParams.set("page", page.toString());
 
     const res = await fetch(url, {
       method: "GET",
