@@ -16,7 +16,7 @@ export function parseItems($: cheerio.CheerioAPI): Video[] {
     const video: Video = {
       id: $el.attr("id"),
       url: $el.find("a").attr("href"),
-      user: $el.find("div.user a").attr("title"),
+      user: $el.find("div.user a").text().trim(),
       content: $el.find("img").attr("alt"),
       thumbnail: $el.find("img").attr("src"),
     };
