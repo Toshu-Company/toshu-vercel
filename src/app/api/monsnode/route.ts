@@ -4,13 +4,16 @@ import { parseItems } from "./parser";
 
 export const runtime = "edge";
 
+const HOST = "https://monsnode.com/";
+
 export async function GET(request: NextRequest) {
   try {
     const rawParams = request.url.split("?")[1];
     const params = new URLSearchParams(rawParams);
     const page = Number(params.get("page")) || 0;
+    const ranking = Boolean(params.get("rank")) || false;
 
-    const url = new URL("https://monsnode.com/");
+    const url = new URL(`${HOST}${ranking ? "ranking" : ""}`);
     url.searchParams.set("page", page.toString());
 
     const res = await fetch(url, {
