@@ -545,7 +545,7 @@ export default class HitomiAPI {
     }
 
     return await fetch(
-      `https://${domain}/${name}/version?_=${Date.now()}`
+      `https://ltn.${domain}/${name}/version?_=${Date.now()}`
     ).then((x) => x.text());
   }
 
