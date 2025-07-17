@@ -186,9 +186,10 @@ export default class HitomiAPI {
       `ids:${tag}:${lang}:${area || ""}`
     );
     if (cached) return cached;
-    const url = `https://${domain}/${compressed_nozomi_prefix}/${
+    const url = `https://${domain}/${
       area ? `${area}/` : ""
     }${tag}-${lang}.nozomi`;
+    console.log(url);
     const res = fetch(url, {
       next: {
         revalidate: 600,
