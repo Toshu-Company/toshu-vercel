@@ -186,10 +186,9 @@ export default class HitomiAPI {
       `ids:${tag}:${lang}:${area || ""}`
     );
     if (cached) return cached;
-    const url = `https://${domain}/${
+    const url = `https://ltn.${domain}/${compressed_nozomi_prefix}/${
       area ? `${area}/` : ""
     }${tag}-${lang}.nozomi`;
-    console.log(url);
     const res = fetch(url, {
       next: {
         revalidate: 600,
@@ -293,7 +292,7 @@ export default class HitomiAPI {
 
     const indexDir = IndexOfField[field] ?? IndexOfField["global"];
     const indexVersion = await this.getIndexVersion(indexDir);
-    const url = `https://${domain}/${indexDir}/${field}.${indexVersion}.index`;
+    const url = `https://ltn.${domain}/${indexDir}/${field}.${indexVersion}.index`;
 
     async function decodeNode(data: ArrayBuffer): Promise<BNode> {
       let view = new DataView(data);
@@ -365,7 +364,7 @@ export default class HitomiAPI {
   ) {
     const indexDir = IndexOfField[field] ?? IndexOfField["global"];
     const indexVersion = await this.getIndexVersion(indexDir);
-    const url = `https://${domain}/${indexDir}/${field}.${indexVersion}.data`;
+    const url = `https://ltn.${domain}/${indexDir}/${field}.${indexVersion}.data`;
     const { offset, length } = data;
     if (length > 10000 || length <= 0)
       throw new Error(`length ${length} is too long"`);
@@ -438,7 +437,7 @@ export default class HitomiAPI {
     const field = "galleries";
     const indexDir = IndexOfField[field];
     const indexVersion = await this.getIndexVersion(indexDir);
-    const url = `https://${domain}/${indexDir}/${field}.${indexVersion}.data`;
+    const url = `https://ltn.${domain}/${indexDir}/${field}.${indexVersion}.data`;
     const { offset, length } = data;
     if (length > 100000000 || length <= 0)
       throw new Error(`length ${length} is too big or too small`);
@@ -546,7 +545,7 @@ export default class HitomiAPI {
     }
 
     return await fetch(
-      `https://${domain}/${name}/version?_=${Date.now()}`
+      `https://ltn.${domain}/${name}/version?_=${Date.now()}`
     ).then((x) => x.text());
   }
 
